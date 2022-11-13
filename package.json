@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build --watch",
+    "preview": "vite preview",
+    "serve": "firebase serve --only hosting",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
+    "firebase": "^9.14.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
