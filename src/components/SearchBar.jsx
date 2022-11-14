@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleQuery = event => {
+    event.preventDefault();
+
+    navigate(`/books/search/${query}`, { state: { query } });
+  };
+
   return (
     <div className="relative flex min-w-fit w-full order-last mr-auto sm:order-none sm:w-auto">
       <span className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -15,11 +25,15 @@ const SearchBar = () => {
         </svg>
       </span>
 
-      <input
-        type="text"
-        className="w-full py-2 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
-        placeholder="Search"
-      />
+      <form onSubmit={handleQuery}>
+        <input
+          type="text"
+          className="w-full py-2 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
+          placeholder="Search"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+        />
+      </form>
     </div>
   );
 };
