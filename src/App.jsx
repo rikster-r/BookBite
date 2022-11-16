@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/books/search/:query" element={<SearchResults />} />
         <Route path="/books/:id" element={<>{/*todo*/}</>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
