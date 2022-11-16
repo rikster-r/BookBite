@@ -24,7 +24,7 @@ const LoginButton = () => {
             alt=""
             referrerPolicy="no-referrer"
           />
-          <h2 className="text-lg text-gray-700 dark:text-gray-200">{name}</h2>
+          <h2 className="text-lg text-gray-800 dark:text-white">{name}</h2>
         </div>
       ) : (
         <button

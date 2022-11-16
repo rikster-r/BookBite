@@ -25,7 +25,7 @@ const SearchBar = () => {
         </svg>
       </span>
 
-      <form onSubmit={handleQuery}>
+      <form onSubmit={handleQuery} className="w-full">
         <input
           type="text"
           className="w-full py-2 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
