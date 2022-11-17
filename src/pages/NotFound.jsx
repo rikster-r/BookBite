@@ -16,7 +16,7 @@ const NotFound = () => {
       </h4>
       <p className="mb-8 text-lg">The page you are looking for doesn’t exist</p>
       <a
-        className="hover:text-primary rounded-lg border border-gray-800 dark:border-white px-8 py-3 font-semibold transition hover:bg-gray-800 hover:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:cursor-pointer"
+        className="px-8 py-3 tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:cursor-pointer"
         onClick={navigateHome}
       >
         Go to Homepage
