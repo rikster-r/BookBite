@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="flex justify-center items-center p-3 text-gray-800 dark:bg-gray-700 dark:text-white">
+    <footer className="flex justify-center items-center p-3 text-gray-800 dark:bg-gray-700 dark:text-white pt-10">
       <a
         href="https://github.com/rikster-r/library-new"
         className="flex justify-center items-center gap-2 hover:underline"
