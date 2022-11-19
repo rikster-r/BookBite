@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isUserSignedIn, saveBook } from '../Firebase';
 
 const BookEditModal = ({ bookId, closeModal }) => {
-  //todo - dropdown status, progress, 10 point score, notes
+  //todo - add progress
 
   /*TO USE
 
@@ -25,7 +26,15 @@ const BookEditModal = ({ bookId, closeModal }) => {
   const handleSubmit = e => {
     e.preventDefault();
     let data = new FormData(e.target);
-    console.log(data);
+    const bookObject = Object.fromEntries(data.entries());
+
+    if (isUserSignedIn()) {
+      saveBook(bookId, bookObject);
+      closeModal();
+      //todo success message
+    } else {
+      alert('You must login first');
+    }
   };
 
   return (
