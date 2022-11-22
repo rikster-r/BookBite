@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Book from '../components/Book';
@@ -9,7 +8,7 @@ const SearchResults = () => {
   const query = useParams().query;
   const [results, setResults] = useState();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentBookId, setCurrentBookId] = useState(null);
+  const [currentBook, setCurrentBook] = useState(null);
 
   useEffect(() => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
@@ -22,13 +21,17 @@ const SearchResults = () => {
       });
   }, [query]);
 
-  const openModal = id => {
-    setCurrentBookId(id);
+  const openModal = book => {
+    setCurrentBook({
+      id: book.id,
+      title: book.volumeInfo.title,
+      imageUrl: book.volumeInfo.imageLinks.thumbnail,
+    });
     setIsOpen(true);
   };
 
   const closeModal = () => {
-    setCurrentBookId(null);
+    setCurrentBook(null);
     setIsOpen(false);
   };
 
@@ -58,7 +61,7 @@ const SearchResults = () => {
           <Book item={item} openModal={openModal} key={item.id} />
         ))}
       </ul>
-      {isOpen ? <BookEditModal bookId={currentBookId} closeModal={closeModal} /> : ''}
+      {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
     </main>
   );
 };

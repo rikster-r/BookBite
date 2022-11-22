@@ -24,7 +24,7 @@ const Book = ({ item, openModal }) => {
             </h1>
             <button
               className="transition-colors duration-300 transform rounded-full hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:cursor-pointer"
-              onClick={() => openModal(item.id)}
+              onClick={() => openModal(item)}
             >
               <svg className="w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 24 24">
                 <path

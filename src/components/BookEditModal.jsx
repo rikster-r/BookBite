@@ -2,36 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isUserSignedIn, saveBook } from '../Firebase';
 
-const BookEditModal = ({ bookId, closeModal }) => {
-  //todo - add progress
+const BookEditModal = ({ book, closeModal }) => {
+  //todo - add progress, add fetching already existing data by id
 
   /*TO USE
 
   const [isOpen, setIsOpen] = useState(false);
-  const [currentBookId, setCurrentBookId] = useState(null);
+  const [currentBook, setCurrentBook] = useState(null);
 
-  const openModal = id => {
-    setCurrentBookId(id);
+  const openModal = item => {
+    setCurrentBook(item);
     setIsOpen(true);
   };
 
   const closeModal = () => {
-    setCurrentBookId(null);
+    setCurrentBook(null);
     setIsOpen(false);
   };
 
-  {isOpen ? <BookEditModal bookId={currentBookId} closeModal={closeModal} /> : ''}
+  {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
   */
 
   const handleSubmit = e => {
     e.preventDefault();
+
     let data = new FormData(e.target);
+    data.append('title', book.title);
+    data.append('imageUrl', book.imageUrl);
     const bookObject = Object.fromEntries(data.entries());
 
     if (isUserSignedIn()) {
-      saveBook(bookId, bookObject);
+      saveBook(book.id, bookObject);
       closeModal();
-      //todo success message
+      //todo - success message
     } else {
       alert('You must login first');
     }
@@ -114,7 +117,7 @@ const BookEditModal = ({ bookId, closeModal }) => {
 };
 
 BookEditModal.propTypes = {
-  bookId: PropTypes.string,
+  book: PropTypes.object,
   closeModal: PropTypes.func,
 };
 
