@@ -35,7 +35,7 @@ onAuthStateChanged(auth, async user => {
   if (!user) return;
 
   if (!userRef) {
-    await setDoc(doc(usersRef, user.uid), {});
+    await setDoc(doc(usersRef, user.uid), { name: user.displayName, image: user.photoURL });
   }
 
   userRef = doc(usersRef, user.uid);

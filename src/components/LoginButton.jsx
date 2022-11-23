@@ -43,7 +43,7 @@ const LoginButton = () => {
             <div className="py-1">
               {/* Profile, Stats */}
               <Link
-                to="/profile"
+                to={`/profile/${name}`}
                 className="dark:text-white flex items-center gap-1 w-full px-4 p-2 text-left text-sm hover:text-gray-200"
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
