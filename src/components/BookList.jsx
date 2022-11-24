@@ -10,32 +10,29 @@ const BookList = ({ books, title, openModal, username }) => {
 
   return (
     <div className="w-full">
-      <h2 className="pl-6 mb-3">{title}</h2>
+      <h2 className="pl-6 mb-2">{title}</h2>
       <div>
         {filtered.map(book => {
-          {
-            /* todo - notes, show full image on hover, show edit on image click */
-          }
           return (
             <div
               key={book.id}
-              className="relative group flex items-center p-3 pr-6 gap-3 hover:bg-gray-800 hover:text-white"
+              className="relative group-one flex items-center p-3 pr-6 gap-3 hover:bg-gray-800 hover:text-white"
             >
               {/* full image on hover */}
               <img
                 src={book.imageUrl}
-                className="hidden md:group-hover:block absolute -left-36 rounded"
+                className="hidden md:group-one-hover:block absolute -left-36 rounded"
               />
               <div className="w-12 h-12 relative">
                 {/* small image for list */}
                 <img
-                  className={`rounded object-cover object-center w-full max-h-full h-auto group-hover:hidden`}
+                  className={`rounded object-cover object-center w-full max-h-full h-auto group-one-hover:hidden`}
                   src={book.imageUrl}
                 />
                 {/* Edit button on hover */}
                 {authorized ? (
                   <button
-                    className="rounded w-full h-full hidden bg-gray-700 group-hover:flex items-center justify-center"
+                    className="rounded w-full h-full hidden bg-gray-700 group-one-hover:flex items-center justify-center"
                     onClick={() => openModal(book)}
                   >
                     <svg className="w-4/5" viewBox="0 0 24 24">
@@ -50,6 +47,18 @@ const BookList = ({ books, title, openModal, username }) => {
                 )}
               </div>
               <h3 className="text-lg mr-auto">{book.title}</h3>
+              {book.notes ? (
+                <div className="group-two relative">
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z" />
+                  </svg>
+                  <p className="z-10 hidden md:group-two-hover:block absolute rounded p-4 -right-1/2 w-max max-w-xs bg-gray-800">
+                    {book.notes}
+                  </p>
+                </div>
+              ) : (
+                ''
+              )}
               {book.rating ? <p className="whitespace-nowrap">Score: {book.rating}/10</p> : ''}
             </div>
           );

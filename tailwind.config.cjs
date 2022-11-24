@@ -9,5 +9,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('tailwindcss-scoped-groups')({
+      groups: ['one', 'two'],
+    }),
+  ],
 };

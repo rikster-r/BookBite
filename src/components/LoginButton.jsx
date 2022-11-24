@@ -28,23 +28,23 @@ const LoginButton = () => {
               referrerPolicy="no-referrer"
             />
             <h2 className="text-lg text-gray-800 dark:text-white">{name}</h2>
-            {/* className="w-8 h-8 fill-gray-600 group-hover:fill-gray-400" */}
             <svg
-              className="hidden sm:block w-5 h-5 fill-gray-600 group-hover:fill-gray-400 mt-1"
+              className="hidden sm:block w-5 h-5 fill-gray-400 group-hover:fill-gray-600
+              dark:fill-gray-600 dark:group-hover:fill-gray-400 mt-1"
               viewBox="0 0 24 24"
             >
               <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>
           </button>
 
+          {/* Dropdown */}
           <div
-            className={`hidden sm:group-hover:block absolute origin-top-right top-9 py-2 z-10 min-w-full rounded-md bg-gray-800 shadow-lg ring-3 ring-white focus:outline-none`}
+            className={`hidden sm:group-hover:block absolute origin-top-right top-9 py-2 z-10 min-w-full rounded-md bg-white dark:bg-gray-800 shadow-lg ring-3 ring-white focus:outline-none`}
           >
             <div className="py-1">
-              {/* Profile, Stats */}
               <Link
                 to={`/profile/${name}`}
-                className="dark:text-white flex items-center gap-1 w-full px-4 p-2 text-left text-sm hover:text-gray-200"
+                className="flex items-center gap-1 w-full px-4 p-2 text-left text-sm dark:text-white hover:text-gray-500 dark:hover:text-gray-300 "
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
@@ -53,7 +53,7 @@ const LoginButton = () => {
               </Link>
               <Link
                 to="/profile/statistics"
-                className="dark:text-white flex items-center gap-1 w-full px-4 py-2 text-left text-sm hover:text-gray-200"
+                className="flex items-center gap-1 w-full px-4 py-2 text-left text-sm dark:text-white  hover:text-gray-500 dark:hover:text-gray-300"
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z" />
@@ -62,7 +62,7 @@ const LoginButton = () => {
               </Link>
               <Link
                 to="/"
-                className="text-red-500 flex items-center gap-1 w-full px-4 py-2 text-left text-sm hover:text-red-600"
+                className="flex items-center gap-1 w-full px-4 py-2 text-left text-sm text-red-500  hover:text-red-700"
                 onClick={signOutUser}
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
