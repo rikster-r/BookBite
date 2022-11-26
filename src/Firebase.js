@@ -6,7 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBSZukp9HUMdxJFn7ohumUGdiLrECPPjAg',
@@ -47,5 +47,16 @@ export async function saveBook(id, book) {
     await setDoc(doc(booksRef, id), book);
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error); //todo
+  }
+}
+
+export async function getBookbyId(id) {
+  const bookRef = doc(booksRef, id);
+  const docSnap = await getDoc(bookRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return;
   }
 }

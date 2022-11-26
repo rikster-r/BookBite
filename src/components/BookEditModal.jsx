@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { isUserSignedIn, saveBook } from '../Firebase';
+import { isUserSignedIn, saveBook, getBookbyId } from '../Firebase';
 
 const BookEditModal = ({ book, closeModal }) => {
-  //todo - add progress, add fetching already existing data by id
-
   /*TO USE
 
   const [isOpen, setIsOpen] = useState(false);
@@ -23,13 +21,31 @@ const BookEditModal = ({ book, closeModal }) => {
   {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
   */
 
+  const [status, setStatus] = useState('');
+  const [rating, setRating] = useState('');
+  const [notes, setNotes] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const data = await getBookbyId(book.id);
+      if (data) {
+        setStatus(data.status);
+        setRating(data.rating);
+        setNotes(data.notes);
+      }
+    })();
+  }, []);
+
   const handleSubmit = e => {
     e.preventDefault();
 
-    let data = new FormData(e.target);
-    data.append('title', book.title);
-    data.append('imageUrl', book.imageUrl);
-    const bookObject = Object.fromEntries(data.entries());
+    const bookObject = {
+      status,
+      rating,
+      notes,
+      title: book.title,
+      imageUrl: book.imageUrl,
+    };
 
     if (isUserSignedIn()) {
       saveBook(book.id, bookObject);
@@ -60,6 +76,8 @@ const BookEditModal = ({ book, closeModal }) => {
                   name="status"
                   autoComplete="Status"
                   className="block w-full rounded-md border border-gray-300 px-4 py-2 bg-white focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300 sm:text-sm shadow-sm text-gray-800"
+                  value={status}
+                  onChange={e => setStatus(e.target.value)}
                   required
                 >
                   <option value="">-- Select status -- </option>
@@ -82,6 +100,8 @@ const BookEditModal = ({ book, closeModal }) => {
                   placeholder="0 - 10"
                   min="1"
                   max="10"
+                  value={rating}
+                  onChange={e => setRating(e.target.value)}
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -92,6 +112,8 @@ const BookEditModal = ({ book, closeModal }) => {
                   name="notes"
                   id="notes"
                   className="min-h-[80px] w-full rounded-md border border-gray-300 px-4 py-4 focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300 sm:text-sm shadow-sm text-gray-800 resize-y"
+                  value={notes}
+                  onChange={e => setNotes(e.target.value)}
                 />
               </div>
             </div>
