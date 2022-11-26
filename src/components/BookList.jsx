@@ -2,8 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { auth, isUserSignedIn } from '../Firebase';
 
-const BookList = ({ books, title, openModal, username }) => {
-  const filtered = books.filter(book => book.status === title);
+const BookList = ({ books, title, sort, openModal, username }) => {
+  const filtered = books
+    .filter(book => book.status === title)
+    .sort((prevBook, book) => {
+      // if property is a number uses 1st method, else uses 2nd
+      return (
+        book[sort.toLowerCase()] - prevBook[sort.toLowerCase()] ||
+        (book[sort.toLowerCase()] < prevBook[sort.toLowerCase()] ? 1 : -1)
+      );
+    });
   const authorized = isUserSignedIn() && username === auth.currentUser.displayName;
 
   if (filtered.length === 0) return <></>;
@@ -59,7 +67,7 @@ const BookList = ({ books, title, openModal, username }) => {
               ) : (
                 ''
               )}
-              {book.rating ? <p className="whitespace-nowrap">Score: {book.rating}/10</p> : ''}
+              {book.rating ? <p className="whitespace-nowrap">Rating: {book.rating}/10</p> : ''}
             </div>
           );
         })}
@@ -71,6 +79,7 @@ const BookList = ({ books, title, openModal, username }) => {
 BookList.propTypes = {
   books: PropTypes.array,
   title: PropTypes.string,
+  sort: PropTypes.string,
   openModal: PropTypes.func,
   username: PropTypes.string,
 };
