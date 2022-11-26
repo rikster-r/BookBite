@@ -81,66 +81,68 @@ const Profile = () => {
     );
   }
 
-  if (filter !== 'All') {
-    return (
-      <main className="flex-1 dark:bg-gray-700 text-gray-800 dark:text-white grid grid-cols-10 gap-6 py-4 px-6 lg:px-32 2xl:px-72">
-        <Sidebar filter={filter} sort={sort} changeFilter={changeFilter} changeSort={changeSort} />
-        <div className="col-span-10 md:col-span-8 flex flex-col gap-6">
-          <BookList
-            books={books}
-            title={filter}
-            sort={sort}
-            openModal={openModal}
-            username={userData.name}
-          />
-        </div>
-        {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
-      </main>
-    );
-  }
-
   return (
-    <main className="flex-1 dark:bg-gray-700 text-gray-800 dark:text-white grid grid-cols-10 gap-6 py-4 px-6 lg:px-32 2xl:px-72">
-      <Sidebar filter={filter} sort={sort} changeFilter={changeFilter} changeSort={changeSort} />
-      <div className="col-span-10 md:col-span-8 flex flex-col gap-6">
-        <BookList
-          books={books}
-          title="Reading"
-          sort={sort}
-          openModal={openModal}
-          username={userData.name}
-        />
-        <BookList
-          books={books}
-          title="Completed"
-          sort={sort}
-          openModal={openModal}
-          username={userData.name}
-        />
-        <BookList
-          books={books}
-          title="Paused"
-          sort={sort}
-          openModal={openModal}
-          username={userData.name}
-        />
-        <BookList
-          books={books}
-          title="Dropped"
-          sort={sort}
-          openModal={openModal}
-          username={userData.name}
-        />
-        <BookList
-          books={books}
-          title="Planning"
-          sort={sort}
-          openModal={openModal}
-          username={userData.name}
-        />
+    <>
+      <div className="dark:bg-gray-900 flex items-center pt-28 dark:text-white mb-6">
+        <div className="flex items-end gap-6 px-6 pt-4 lg:px-32 2xl:px-72">
+          <img className="font-bold w-32 rounded-t" src={userData.image}></img>
+          <h2 className="text-2xl mb-6 font-bold">{userData.name}</h2>
+        </div>
       </div>
-      {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
-    </main>
+      <div className="flex-1 dark:bg-gray-700 text-gray-800 dark:text-white grid grid-cols-10 gap-6 py-4 px-6 lg:px-32 2xl:px-72 ">
+        <Sidebar filter={filter} sort={sort} changeFilter={changeFilter} changeSort={changeSort} />
+        <main className="col-span-10 md:col-span-8 flex flex-col gap-6">
+          {filter === 'All' ? (
+            <>
+              <BookList
+                books={books}
+                title="Reading"
+                sort={sort}
+                openModal={openModal}
+                username={userData.name}
+              />
+              <BookList
+                books={books}
+                title="Completed"
+                sort={sort}
+                openModal={openModal}
+                username={userData.name}
+              />
+              <BookList
+                books={books}
+                title="Paused"
+                sort={sort}
+                openModal={openModal}
+                username={userData.name}
+              />
+              <BookList
+                books={books}
+                title="Dropped"
+                sort={sort}
+                openModal={openModal}
+                username={userData.name}
+              />
+              <BookList
+                books={books}
+                title="Planning"
+                sort={sort}
+                openModal={openModal}
+                username={userData.name}
+              />
+            </>
+          ) : (
+            <BookList
+              books={books}
+              title={filter}
+              sort={sort}
+              openModal={openModal}
+              username={userData.name}
+            />
+          )}
+        </main>
+        {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
+      </div>
+    </>
   );
 };
 
