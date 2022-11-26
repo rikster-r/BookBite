@@ -17,7 +17,7 @@ const BookList = ({ books, title, sort, openModal, username }) => {
   if (filtered.length === 0) return <></>;
 
   return (
-    <div className="w-full">
+    <div>
       <h2 className="pl-6 mb-2">{title}</h2>
       <div>
         {filtered.map(book => {
@@ -31,10 +31,10 @@ const BookList = ({ books, title, sort, openModal, username }) => {
                 src={book.imageUrl}
                 className="hidden md:group-one-hover:block absolute -left-36 rounded"
               />
-              <div className="w-12 h-12 relative">
+              <div className="w-12 h-12 shrink-0">
                 {/* small image for list */}
                 <img
-                  className={`rounded object-cover object-center w-full max-h-full h-auto group-one-hover:hidden`}
+                  className={`rounded object-cover object-center w-full max-h-full group-one-hover:hidden`}
                   src={book.imageUrl}
                 />
                 {/* Edit button on hover */}
@@ -54,7 +54,7 @@ const BookList = ({ books, title, sort, openModal, username }) => {
                   ''
                 )}
               </div>
-              <h3 className="text-lg mr-auto">{book.title}</h3>
+              <h3 className="text-lg mr-auto line-clamp-2">{book.title}</h3>
               {book.notes ? (
                 <div className="group-two relative">
                   <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
@@ -67,7 +67,11 @@ const BookList = ({ books, title, sort, openModal, username }) => {
               ) : (
                 ''
               )}
-              {book.rating ? <p className="whitespace-nowrap">Rating: {book.rating}/10</p> : ''}
+              {book.rating ? (
+                <p className="whitespace-nowrap ml-1">Rating: {book.rating}/10</p>
+              ) : (
+                ''
+              )}
             </div>
           );
         })}
