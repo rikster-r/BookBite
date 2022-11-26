@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { isUserSignedIn, saveBook, getBookbyId } from '../Firebase';
+import { isUserSignedIn, saveBook, getBookbyId, deleteBookById } from '../Firebase';
 
 const BookEditModal = ({ book, closeModal }) => {
   /*TO USE
@@ -21,6 +21,7 @@ const BookEditModal = ({ book, closeModal }) => {
   {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
   */
 
+  const [isStored, setIsStored] = useState(false);
   const [status, setStatus] = useState('');
   const [rating, setRating] = useState('');
   const [notes, setNotes] = useState('');
@@ -29,6 +30,7 @@ const BookEditModal = ({ book, closeModal }) => {
     (async () => {
       const data = await getBookbyId(book.id);
       if (data) {
+        setIsStored(true);
         setStatus(data.status);
         setRating(data.rating);
         setNotes(data.notes);
@@ -54,6 +56,11 @@ const BookEditModal = ({ book, closeModal }) => {
     } else {
       alert('You must login first');
     }
+  };
+
+  const handleRemove = () => {
+    deleteBookById(book.id);
+    closeModal();
   };
 
   return (
@@ -120,13 +127,24 @@ const BookEditModal = ({ book, closeModal }) => {
             <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 text-gray-800 dark:text-white dark:bg-gray-700 ">
               <button
                 type="submit"
-                className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                className="mb-3 inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
               >
                 Confirm
               </button>
+              {isStored ? (
+                <button
+                  type="button"
+                  className="mb-3 inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                  onClick={handleRemove}
+                >
+                  Delete
+                </button>
+              ) : (
+                ''
+              )}
               <button
                 type="button"
-                className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-800 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                className="mb-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-800 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={closeModal}
               >
                 Cancel

@@ -6,7 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBSZukp9HUMdxJFn7ohumUGdiLrECPPjAg',
@@ -59,4 +59,8 @@ export async function getBookbyId(id) {
   } else {
     return;
   }
+}
+
+export async function deleteBookById(id) {
+  await deleteDoc(doc(booksRef, id));
 }
