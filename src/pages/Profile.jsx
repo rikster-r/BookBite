@@ -97,6 +97,7 @@ const Profile = () => {
         <BookList books={books} title="Completed" openModal={openModal} username={userData.name} />
         <BookList books={books} title="Paused" openModal={openModal} username={userData.name} />
         <BookList books={books} title="Dropped" openModal={openModal} username={userData.name} />
+        <BookList books={books} title="Planning" openModal={openModal} username={userData.name} />
       </div>
       {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
     </main>

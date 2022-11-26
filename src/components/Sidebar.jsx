@@ -12,6 +12,7 @@ const Sidebar = ({ filter, sort, changeFilter }) => {
         <SidebarTab text="Completed" selected={filter} changeTab={changeFilter} />
         <SidebarTab text="Paused" selected={filter} changeTab={changeFilter} />
         <SidebarTab text="Dropped" selected={filter} changeTab={changeFilter} />
+        <SidebarTab text="Planning" selected={filter} changeTab={changeFilter} />
       </div>
       <div className="flex flex-col gap-2 pt-5">
         <h5 className="pl-2 text-sm">Sort By:</h5>

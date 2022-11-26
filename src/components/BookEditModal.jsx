@@ -67,6 +67,7 @@ const BookEditModal = ({ book, closeModal }) => {
                   <option value="Completed">Completed</option>
                   <option value="Dropped">Dropped</option>
                   <option value="Paused">Paused</option>
+                  <option value="Planning">Planning</option>
                 </select>
               </div>
               <div className="flex flex-col gap-1">
