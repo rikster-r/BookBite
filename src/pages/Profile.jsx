@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { onSnapshot, query, where, collection, getDocs } from 'firebase/firestore';
-import { usersRef } from '../Firebase';
+import { onSnapshot, collection } from 'firebase/firestore';
+import { getUserDoc, usersRef } from '../Firebase';
 
 import Loading from '../components/Loading';
 import Sidebar from '../components/Sidebar';
 import BookList from '../components/BookList';
 import BookEditModal from '../components/BookEditModal';
+import ProfileHeader from '../components/ProfileHeader';
 
 const Profile = () => {
   const username = useParams().username;
@@ -21,13 +22,11 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const q = query(usersRef, where('name', '==', username));
     let unsub;
 
     (async () => {
-      const querySnapshot = await getDocs(q);
+      const userDoc = await getUserDoc(username);
 
-      const userDoc = querySnapshot.docs[0];
       if (userDoc) {
         setUserData(userDoc.data());
         const booksRef = collection(usersRef, `${userDoc.id}/books`);
@@ -82,14 +81,9 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <div className="dark:bg-gray-900 flex items-center pt-28 dark:text-white mb-6">
-        <div className="flex items-end gap-6 px-6 pt-4 lg:px-32 2xl:px-72">
-          <img className="font-bold w-32 rounded-t" src={userData.image}></img>
-          <h2 className="text-2xl mb-6 font-bold">{userData.name}</h2>
-        </div>
-      </div>
-      <div className="flex-1 dark:bg-gray-700 text-gray-800 dark:text-white grid grid-cols-10 gap-6 py-4 px-6 lg:px-32 2xl:px-72 ">
+    <section className="flex-1">
+      <ProfileHeader user={userData} />
+      <div className="dark:bg-gray-700 text-gray-800 dark:text-white grid grid-cols-10 gap-6 py-4 px-6 lg:px-32 2xl:px-72 ">
         <Sidebar filter={filter} sort={sort} changeFilter={changeFilter} changeSort={changeSort} />
         <main className="col-span-10 md:col-span-8 flex flex-col gap-6">
           {filter === 'All' ? (
@@ -142,7 +136,7 @@ const Profile = () => {
         </main>
         {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
       </div>
-    </>
+    </section>
   );
 };
 

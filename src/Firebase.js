@@ -6,7 +6,17 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  deleteDoc,
+  query,
+  where,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBSZukp9HUMdxJFn7ohumUGdiLrECPPjAg',
@@ -41,6 +51,14 @@ onAuthStateChanged(auth, async user => {
   userRef = doc(usersRef, user.uid);
   booksRef = collection(usersRef, user.uid, 'books');
 });
+
+export async function getUserDoc(username) {
+  const q = query(usersRef, where('name', '==', username));
+  const querySnapshot = await getDocs(q);
+  const userDoc = querySnapshot.docs[0];
+
+  return userDoc;
+}
 
 export async function saveBook(id, book) {
   try {
