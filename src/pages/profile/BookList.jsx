@@ -24,14 +24,14 @@ const BookList = ({ books, title, sort, openModal, username }) => {
           return (
             <div
               key={book.id}
-              className="relative group-one flex items-center p-3 pr-6 gap-3 hover:bg-gray-800 hover:text-white"
+              className="relative group-one flex items-center p-3 pr-6 gap-3 hover:bg-gray-800 hover:text-white text-base sm:text-lg"
             >
               {/* full image on hover */}
               <img
                 src={book.imageUrl}
                 className="hidden md:group-one-hover:block absolute -left-36 rounded"
               />
-              <div className="w-12 h-12 shrink-0">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0">
                 {/* small image for list */}
                 <img
                   className={`rounded object-cover object-center w-full max-h-full group-one-hover:hidden`}
@@ -54,10 +54,10 @@ const BookList = ({ books, title, sort, openModal, username }) => {
                   ''
                 )}
               </div>
-              <h3 className="text-lg mr-auto line-clamp-2">{book.title}</h3>
+              <h3 className="mr-auto line-clamp-2">{book.title}</h3>
               {book.notes ? (
                 <div className="group-two relative">
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
                     <path d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z" />
                   </svg>
                   <p className="z-10 hidden md:group-two-hover:block absolute rounded p-4 -right-1/2 w-max max-w-xs bg-gray-800">
@@ -68,7 +68,10 @@ const BookList = ({ books, title, sort, openModal, username }) => {
                 ''
               )}
               {book.rating ? (
-                <p className="whitespace-nowrap ml-1">Rating: {book.rating}/10</p>
+                <p className="whitespace-nowrap ml-1">
+                  <span className="hidden sm:inline-block mr-1">Rating:</span>
+                  <span>{book.rating}/10</span>
+                </p>
               ) : (
                 ''
               )}
