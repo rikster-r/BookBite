@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Profile from './pages/Profile';
-import SearchResults from './pages/SearchResults';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Profile from './pages/profile/Profile';
+import SearchResults from './pages/searchResults/SearchResults';
 import NotFound from './pages/NotFound';
-import Statistics from './pages/Statistics';
+import Statistics from './pages/statistics/Statistics';
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { signIn, auth, signOutUser } from '../Firebase';
+import { signIn, auth, signOutUser } from '../../Firebase';
 
 const LoginButton = () => {
   const [name, setName] = useState('');

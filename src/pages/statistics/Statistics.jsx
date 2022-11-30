@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getDocs, collection } from 'firebase/firestore';
-import { getUserDoc, usersRef } from '../Firebase';
+import { getUserDoc, usersRef } from '../../Firebase';
 
-import ProfileHeader from '../components/ProfileHeader';
-import Loading from '../components/Loading';
-import ChartsSection from '../components/ChartsSection';
+import ProfileHeader from '../../components/ProfileHeader';
+import Loading from '../../components/Loading';
+import ChartsSection from './ChartsSection';
 
 const Statistics = () => {
   const navigate = useNavigate();

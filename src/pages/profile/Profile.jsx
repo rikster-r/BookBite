@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { onSnapshot, collection } from 'firebase/firestore';
-import { getUserDoc, usersRef } from '../Firebase';
+import { getUserDoc, usersRef } from '../../Firebase';
 
-import Loading from '../components/Loading';
-import Sidebar from '../components/Sidebar';
-import BookList from '../components/BookList';
-import BookEditModal from '../components/BookEditModal';
-import ProfileHeader from '../components/ProfileHeader';
+import Loading from '../../components/Loading';
+import Sidebar from './Sidebar';
+import BookList from './BookList';
+import BookEditModal from '../../components/BookEditModal';
+import ProfileHeader from '../../components/ProfileHeader';
 
 const Profile = () => {
   const username = useParams().username;

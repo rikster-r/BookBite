@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { auth, isUserSignedIn } from '../Firebase';
+import { auth, isUserSignedIn } from '../../Firebase';
 
 const BookList = ({ books, title, sort, openModal, username }) => {
   const filtered = books

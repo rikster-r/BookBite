@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Loading from '../components/Loading';
-import Book from '../components/Book';
-import BookEditModal from '../components/BookEditModal';
+import Loading from '../../components/Loading';
+import Book from './Book';
+import BookEditModal from '../../components/BookEditModal';
 
 const SearchResults = () => {
   const query = useParams().query;
