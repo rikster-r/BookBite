@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import Book from './Book';
 import BookEditModal from '../../components/BookEditModal';
+import useQueryResults from '../../hooks/useQueryResults';
 
 const SearchResults = () => {
   const query = useParams().query;
-  const [results, setResults] = useState();
+  const results = useQueryResults(query);
   const [isOpen, setIsOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState(null);
-
-  useEffect(() => {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
-      .then(response => response.json())
-      .then(data => {
-        setResults(data);
-      })
-      .catch(error => {
-        alert(error); //todo
-      });
-  }, [query]);
 
   const openModal = book => {
     setCurrentBook({
@@ -35,7 +25,7 @@ const SearchResults = () => {
     setIsOpen(false);
   };
 
-  if (!results) {
+  if (results === undefined) {
     //while data isn't returned
     return (
       <main className="flex-1 flex items-center justify-center dark:bg-gray-700">
@@ -44,7 +34,7 @@ const SearchResults = () => {
     );
   }
 
-  if (!results.totalItems) {
+  if (!results?.totalItems) {
     //when there are no books
     return (
       <main className="flex-1 dark:bg-gray-700 text-gray-800 dark:text-white py-4 px-6 lg:px-32 2xl:px-72">

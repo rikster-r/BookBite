@@ -14,6 +14,7 @@ import {
   getDoc,
   getDocs,
   deleteDoc,
+  updateDoc,
   query,
   where,
 } from 'firebase/firestore';
@@ -42,14 +43,17 @@ export let userRef;
 export let booksRef;
 
 onAuthStateChanged(auth, async user => {
-  if (!user) return;
+  if (user) {
+    if (!getUserDoc(user.displayName)) {
+      await setDoc(doc(usersRef, user.uid), { name: user.displayName, image: user.photoURL });
+    }
 
-  if (!userRef) {
-    await setDoc(doc(usersRef, user.uid), { name: user.displayName, image: user.photoURL });
+    userRef = doc(usersRef, user.uid);
+    booksRef = collection(usersRef, user.uid, 'books');
+  } else {
+    userRef = undefined;
+    booksRef = undefined;
   }
-
-  userRef = doc(usersRef, user.uid);
-  booksRef = collection(usersRef, user.uid, 'books');
 });
 
 export async function getUserDoc(username) {
@@ -81,4 +85,12 @@ export async function getBookbyId(id) {
 
 export async function deleteBookById(id) {
   await deleteDoc(doc(booksRef, id));
+}
+
+export async function updateUserDoc(key, value) {
+  if (!userRef) return new Error("Couldn't update. Unknown error occured");
+
+  await updateDoc(userRef, {
+    key: value,
+  });
 }

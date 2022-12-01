@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { signIn, auth, signOutUser } from '../../Firebase';
+import { signIn, signOutUser } from '../../Firebase';
+import useUserData from '../../hooks/useUserData.js';
 
 const LoginButton = () => {
-  const [name, setName] = useState('');
-  const [profilePic, setProfilePic] = useState('');
-
-  useEffect(() => {
-    onAuthStateChanged(auth, user => updateUserData(user));
-  }, []);
-
-  const updateUserData = user => {
-    setName(user?.displayName);
-    setProfilePic(user?.photoURL);
-  };
+  const [name, profilePic] = useUserData();
 
   return (
     <>
