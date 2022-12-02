@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, getUserDoc } from '../Firebase';
+import { onSnapshot, doc } from 'firebase/firestore';
+import { auth, usersRef } from '../Firebase';
 
 export default function useUserData() {
   const [name, setName] = useState('');
@@ -9,17 +10,18 @@ export default function useUserData() {
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       (async () => {
-        const userDoc = await getUserDoc(user.displayName);
+        if (!user) {
+          setName(undefined);
+          setProfilePic(undefined);
+          return;
+        }
 
-        if (userDoc) {
-          const data = userDoc.data();
+        onSnapshot(doc(usersRef, user.uid), doc => {
+          const data = doc.data();
 
           setName(data.name);
           setProfilePic(data.image);
-        } else {
-          setName(user?.displayName);
-          setProfilePic(user?.photoURL);
-        }
+        });
       })();
     });
   }, []);

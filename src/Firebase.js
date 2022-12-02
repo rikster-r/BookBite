@@ -64,6 +64,14 @@ export async function getUserDoc(username) {
   return userDoc;
 }
 
+export async function updateUserDoc(key, value) {
+  if (!userRef) return new Error("Couldn't update. Unknown error occured");
+
+  await updateDoc(userRef, {
+    [key]: value,
+  });
+}
+
 export async function saveBook(id, book) {
   try {
     await setDoc(doc(booksRef, id), book);
@@ -85,12 +93,4 @@ export async function getBookbyId(id) {
 
 export async function deleteBookById(id) {
   await deleteDoc(doc(booksRef, id));
-}
-
-export async function updateUserDoc(key, value) {
-  if (!userRef) return new Error("Couldn't update. Unknown error occured");
-
-  await updateDoc(userRef, {
-    key: value,
-  });
 }
