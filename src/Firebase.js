@@ -18,6 +18,8 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBSZukp9HUMdxJFn7ohumUGdiLrECPPjAg',
@@ -32,28 +34,29 @@ const firebaseConfig = {
 const provider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
 
+//auth logic
 export const auth = getAuth(app);
 export const signIn = async () => await signInWithPopup(auth, provider);
 export const signOutUser = () => signOut(auth);
 export const isUserSignedIn = () => Boolean(auth.currentUser);
 
+//firestore logic
 const db = getFirestore(app);
 export const usersRef = collection(db, 'users');
-export let userRef;
 export let booksRef;
 
 onAuthStateChanged(auth, async user => {
-  if (user) {
-    if (!getUserDoc(user.displayName)) {
-      await setDoc(doc(usersRef, user.uid), { name: user.displayName, image: user.photoURL });
-    }
-
-    userRef = doc(usersRef, user.uid);
-    booksRef = collection(usersRef, user.uid, 'books');
-  } else {
-    userRef = undefined;
+  if (!user) {
     booksRef = undefined;
+    return;
   }
+
+  //create userDoc if it doesn't exist
+  if (!doc(usersRef, user.uid)) {
+    await setDoc(doc(usersRef, user.uid), { name: user.displayName, image: user.photoURL });
+  }
+
+  booksRef = collection(usersRef, user.uid, 'books');
 });
 
 export async function getUserDoc(username) {
@@ -65,6 +68,8 @@ export async function getUserDoc(username) {
 }
 
 export async function updateUserDoc(key, value) {
+  const userRef = doc(usersRef, auth.currentUser?.uid);
+
   if (!userRef) return new Error("Couldn't update. Unknown error occured");
 
   await updateDoc(userRef, {
@@ -93,4 +98,18 @@ export async function getBookbyId(id) {
 
 export async function deleteBookById(id) {
   await deleteDoc(doc(booksRef, id));
+}
+
+//storage logic
+const storage = getStorage(app);
+const imagesRef = ref(storage, 'images');
+
+export async function uploadImage(file) {
+  //524 288 bytes === 0.5mb
+  if (file.size > 524288) alert('File is too big!');
+
+  const imageRef = ref(imagesRef, file.name + uuidv4());
+  const img = await uploadBytes(imageRef, file);
+  const url = await getDownloadURL(img.ref);
+  return url;
 }
