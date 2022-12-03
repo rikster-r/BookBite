@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { updateUserDoc, uploadImage } from '../../Firebase';
+import { updateUserDoc, updateImageInFolder } from '../../Firebase';
 
 const ProfilePicture = ({ profilePic }) => {
   const handleNewProfilePic = async e => {
-    const url = await uploadImage(e.target.files[0]);
+    const url = await updateImageInFolder(e.target.files[0], 'profilePicture');
     updateUserDoc('image', url);
   };
 
@@ -13,7 +13,7 @@ const ProfilePicture = ({ profilePic }) => {
       <h2 htmlFor="profilePic" className="text-gray-700 dark:text-gray-200">
         Profile Picture
       </h2>
-      <h3 className="text-gray-500 mb-2 text-sm">Allowed Formats: JPEG, PNG. Max size: 0.5mb.</h3>
+      <h3 className="text-gray-500 mb-2 text-sm">Allowed Formats: JPEG, PNG. Max size: 1mb.</h3>
       <div className="flex gap-4">
         <label
           className="flex items-center justify-center text-gray-700 dark:text-gray-400 w-32 sm:w-44 aspect-square border border-dashed border-gray-200 rounded-md dark:bg-gray-800 dark:border-gray-600 focus:outline-none p-4 hover:cursor-pointer"

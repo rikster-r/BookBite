@@ -18,8 +18,14 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  deleteObject,
+} from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBSZukp9HUMdxJFn7ohumUGdiLrECPPjAg',
@@ -102,14 +108,28 @@ export async function deleteBookById(id) {
 
 //storage logic
 const storage = getStorage(app);
-const imagesRef = ref(storage, 'images');
+const usersStorageRef = ref(storage, 'users');
 
-export async function uploadImage(file) {
-  //524 288 bytes === 0.5mb
-  if (file.size > 524288) alert('File is too big!');
+async function uploadImage(file, folderRef) {
+  //1 048 576 bytes === 1mb
+  if (file.size > 1048576) alert('File is too big!');
 
-  const imageRef = ref(imagesRef, file.name + uuidv4());
+  const imageRef = ref(folderRef, file.name);
   const img = await uploadBytes(imageRef, file);
   const url = await getDownloadURL(img.ref);
+  return url;
+}
+
+function deleteFolderItems(folderRef) {
+  listAll(folderRef).then(listResults =>
+    listResults.items.forEach(itemRef => deleteObject(itemRef))
+  );
+}
+
+export async function updateImageInFolder(file, folder) {
+  const folderRef = ref(usersStorageRef, `${auth.currentUser.uid}/${folder}`);
+  deleteFolderItems(folderRef);
+
+  const url = await uploadImage(file, folderRef);
   return url;
 }
