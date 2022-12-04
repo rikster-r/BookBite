@@ -59,7 +59,11 @@ onAuthStateChanged(auth, async user => {
 
   //create userDoc if it doesn't exist
   if (!doc(usersRef, user.uid)) {
-    await setDoc(doc(usersRef, user.uid), { name: user.displayName, image: user.photoURL });
+    await setDoc(doc(usersRef, user.uid), {
+      name: user.displayName,
+      image: user.photoURL,
+      private: false,
+    });
   }
 
   booksRef = collection(usersRef, user.uid, 'books');
@@ -112,7 +116,10 @@ const usersStorageRef = ref(storage, 'users');
 
 async function uploadImage(file, folderRef) {
   //1 048 576 bytes === 1mb
-  if (file.size > 1048576) alert('File is too big!');
+  if (file.size > 1048576) {
+    alert('File is too big!');
+    return;
+  }
 
   const imageRef = ref(folderRef, file.name);
   const img = await uploadBytes(imageRef, file);

@@ -6,6 +6,7 @@ import { auth, usersRef } from '../Firebase';
 export default function useUserData() {
   const [name, setName] = useState('');
   const [profilePic, setProfilePic] = useState('');
+  const [privateStatus, setPrivateStatus] = useState('');
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -13,6 +14,7 @@ export default function useUserData() {
         if (!user) {
           setName(undefined);
           setProfilePic(undefined);
+          setPrivateStatus(undefined);
           return;
         }
 
@@ -21,10 +23,11 @@ export default function useUserData() {
 
           setName(data.name);
           setProfilePic(data.image);
+          setPrivateStatus(data.private);
         });
       })();
     });
   }, []);
 
-  return [name, profilePic];
+  return [name, profilePic, privateStatus];
 }
