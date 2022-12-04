@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactECharts from 'echarts-for-react';
+import ReactEChartsCore from 'echarts-for-react/lib/core';
+import * as echarts from 'echarts/core';
+import { BarChart as BarChartModule } from 'echarts/charts';
+import { GridComponent, TooltipComponent } from 'echarts/components';
+import { SVGRenderer } from 'echarts/renderers';
+
+echarts.use([TooltipComponent, GridComponent, BarChartModule, SVGRenderer]);
 
 const BarChart = ({ name, data, categories, getChartTextColor }) => {
   const option = {
@@ -38,7 +44,8 @@ const BarChart = ({ name, data, categories, getChartTextColor }) => {
   };
 
   return (
-    <ReactECharts
+    <ReactEChartsCore
+      echarts={echarts}
       option={option}
       lazyUpdate={true}
       style={{ height: '28vw', minHeight: '270px', width: '100%' }}
