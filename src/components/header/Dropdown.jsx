@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { signOutUser } from '../../Firebase';
 
 const Dropdown = ({ name }) => {
   return (
@@ -38,16 +37,6 @@ const Dropdown = ({ name }) => {
             />
           </svg>
           <span>Settings</span>
-        </Link>
-        <Link
-          to="/"
-          className="flex items-center gap-1 w-full px-4 py-2 text-left text-sm text-red-500  hover:text-red-700"
-          onClick={signOutUser}
-        >
-          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M14.08,15.59L16.67,13H7V11H16.67L14.08,8.41L15.5,7L20.5,12L15.5,17L14.08,15.59M19,3A2,2 0 0,1 21,5V9.67L19,7.67V5H5V19H19V16.33L21,14.33V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19Z" />
-          </svg>
-          <span>Sign out</span>
         </Link>
       </div>
     </div>

@@ -110,6 +110,13 @@ export async function deleteBookById(id) {
   await deleteDoc(doc(booksRef, id));
 }
 
+export async function deleteAllBooks() {
+  const querySnapshot = await getDocs(booksRef);
+  querySnapshot.forEach(async doc => {
+    await deleteDoc(doc);
+  });
+}
+
 //storage logic
 const storage = getStorage(app);
 const usersStorageRef = ref(storage, 'users');
