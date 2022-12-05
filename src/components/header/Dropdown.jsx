@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Dropdown = ({ name }) => {
   return (
     <div
-      className={`hidden sm:group-hover:block absolute origin-top-right top-9 py-2 z-10 min-w-full rounded-md bg-white dark:bg-gray-800 shadow-lg ring-3 ring-white focus:outline-none`}
+      className={`hidden xl:group-hover:block absolute origin-top-right top-9 py-2 z-10 min-w-full rounded-md bg-white dark:bg-gray-800 shadow-lg ring-3 ring-white focus:outline-none`}
     >
       <div className="py-1">
         <Link
