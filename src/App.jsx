@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Loading from './components/Loading';
+import MobileMenu from './components/MobileMenu';
 
 const Profile = lazy(() => import('./pages/profile/Profile'));
 const SearchResults = lazy(() => import('./pages/searchResults/SearchResults'));
@@ -24,6 +25,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      <MobileMenu />
       <Footer />
     </>
   );
