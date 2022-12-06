@@ -113,7 +113,7 @@ export async function deleteBookById(id) {
 export async function deleteAllBooks() {
   const querySnapshot = await getDocs(booksRef);
   querySnapshot.forEach(async doc => {
-    await deleteDoc(doc);
+    await deleteDoc(doc.ref);
   });
 }
 

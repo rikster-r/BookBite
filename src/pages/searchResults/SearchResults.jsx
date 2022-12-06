@@ -15,7 +15,7 @@ const SearchResults = () => {
     setCurrentBook({
       id: book.id,
       title: book.volumeInfo.title,
-      imageUrl: book.volumeInfo.imageLinks.thumbnail,
+      imageUrl: book.volumeInfo.imageLinks.thumbnail.replace(/^http:\/\//i, 'https://'),
     });
     setIsOpen(true);
   };

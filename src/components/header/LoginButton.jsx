@@ -19,7 +19,7 @@ const LoginButton = () => {
             />
             <h2 className="text-lg text-gray-800 dark:text-white">{name}</h2>
             <svg
-              className="hidden sm:block w-5 h-5 fill-gray-400 group-hover:fill-gray-600
+              className="hidden xl:block w-5 h-5 fill-gray-400 group-hover:fill-gray-600
               dark:fill-gray-600 dark:group-hover:fill-gray-400 mt-1"
               viewBox="0 0 24 24"
             >

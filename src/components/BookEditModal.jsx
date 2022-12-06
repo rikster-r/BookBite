@@ -46,7 +46,7 @@ const BookEditModal = ({ book, closeModal }) => {
       rating,
       notes,
       title: book.title,
-      imageUrl: book.imageUrl.replace(/^http:\/\//i, 'https://'),
+      imageUrl: book.imageUrl,
     };
 
     if (isUserSignedIn()) {

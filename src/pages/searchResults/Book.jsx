@@ -12,7 +12,7 @@ const Book = ({ item, openModal }) => {
         <img
           alt="Book Cover"
           className="w-16 sm:w-max max-w-xs h-max max-h-96 object-center rounded"
-          src={item.volumeInfo?.imageLinks?.thumbnail}
+          src={item.volumeInfo?.imageLinks?.thumbnail.replace(/^http:\/\//i, 'https://')}
         />
         <div>
           <h2 className="line-clamp-1 text-sm title-font tracking-widest text-gray-700 dark:text-gray-200">
