@@ -12,12 +12,11 @@ const LoginButton = () => {
         <div className="relative group">
           <button className="flex items-center gap-1">
             <img
-              className="rounded-full w-9 h-9"
+              className="w-9 h-9"
               src={profilePic}
               alt="Profile Picture"
               referrerPolicy="no-referrer"
             />
-            <h2 className="text-lg text-gray-800 dark:text-white">{name}</h2>
             <svg
               className="hidden xl:block w-5 h-5 fill-gray-400 group-hover:fill-gray-600
               dark:fill-gray-600 dark:group-hover:fill-gray-400 mt-1"

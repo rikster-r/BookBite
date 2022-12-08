@@ -5,6 +5,12 @@ import { updateUserDoc } from '../../Firebase';
 const Name = ({ name }) => {
   const [inputName, setInputName] = useState(name);
 
+  const changeName = e => {
+    if (!e.target.value) return;
+
+    setInputName(e.target.value);
+  };
+
   return (
     <div className="flex flex-col">
       <label className="text-gray-700 dark:text-gray-200 mb-2" htmlFor="username">
@@ -12,7 +18,7 @@ const Name = ({ name }) => {
       </label>
       <input
         value={inputName}
-        onChange={e => setInputName(e.target.value)}
+        onChange={changeName}
         name="username"
         id="username"
         type="text"
