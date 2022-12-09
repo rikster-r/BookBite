@@ -16,7 +16,7 @@ const ProfilePicture = ({ profilePic }) => {
       <h3 className="text-gray-500 mb-2 text-sm">Allowed Formats: JPEG, PNG. Max size: 1mb.</h3>
       <div className="flex gap-4">
         <label
-          className="text-center flex items-center justify-center text-gray-700 dark:text-gray-400 w-32 lg:w-44 aspect-square border border-dashed border-gray-200 rounded-md dark:bg-gray-800 dark:border-gray-600 focus:outline-none p-4 hover:cursor-pointer"
+          className="text-center flex items-center justify-center text-gray-700 dark:text-gray-400 w-32 lg:w-44 aspect-square border border-dashed border-gray-400 rounded-md dark:bg-gray-800 dark:border-gray-600 focus:outline-none p-4 hover:cursor-pointer"
           htmlFor="profilePic"
         >
           Click here to upload

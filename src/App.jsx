@@ -11,6 +11,7 @@ const SearchResults = lazy(() => import('./pages/searchResults/SearchResults'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Statistics = lazy(() => import('./pages/statistics/Statistics'));
 const Settings = lazy(() => import('./pages/settings/Settings'));
+const Home = lazy(() => import('./pages/home/Home'));
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Header />
       <Suspense fallback={<Loading />}>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/profile/:username/statistics" element={<Statistics />} />
           <Route path="/books/search/:query" element={<SearchResults />} />
