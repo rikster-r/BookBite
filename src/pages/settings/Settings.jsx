@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUserData from '../../hooks/useUserData';
 import { Link } from 'react-router-dom';
 import { signOutUser, deleteAllBooks } from '../../Firebase';
+import { AnimatePresence } from 'framer-motion';
 
 import Loading from '../../components/Loading';
 import Name from './Name';
 import ProfilePicture from './ProfilePicture';
 import Privacy from './Privacy';
+import SuccessPopup from '../../components/popups/SuccessPopup';
 
 const Settings = () => {
-  //todo success alerts
   const navigate = useNavigate();
   const [name, profilePic, privateStatus] = useUserData();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupText, setPopupText] = useState('');
+
+  const showPopup = text => {
+    setPopupText(text);
+    setIsPopupOpen(true);
+
+    setTimeout(() => {
+      setIsPopupOpen(false);
+      setPopupText('');
+    }, 2000);
+  };
+
+  const handleBooksDelete = () => {
+    deleteAllBooks();
+    showPopup('Books deleted successfully');
+  };
 
   if (name === undefined) navigate('/');
 
@@ -27,11 +45,11 @@ const Settings = () => {
   return (
     <main className="flex-1 md:grid  content-start grid-cols-4 dark:bg-gray-700">
       <div className="bg-gray-200 dark:bg-gray-800 col-start-2 col-span-2 p-6 rounded-lg m-3 md:my-6">
-        <Name name={name} />
-        <ProfilePicture profilePic={profilePic} />
-        <Privacy privateStatus={privateStatus} />
+        <Name name={name} showPopup={showPopup} />
+        <ProfilePicture profilePic={profilePic} showPopup={showPopup} />
+        <Privacy privateStatus={privateStatus} showPopup={showPopup} />
 
-        <hr className="my-8 h-0.5 bg-white border-0 dark:bg-gray-600"></hr>
+        <hr className="my-8 h-0.5 bg-white border-0 dark:bg-gray-600" />
         <div className="mt-3">
           <h2 className="text-gray-700 dark:text-gray-200">Delete all library entries</h2>
           <h3 className="text-gray-500 mb-2 text-sm">
@@ -39,7 +57,7 @@ const Settings = () => {
           </h3>
           <button
             className="mt-2 px-6 py-2 tracking-wide text-white transition-colors duration-300 transform bg-red-600 rounded-lg hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80 flex items-center gap-2"
-            onClick={deleteAllBooks}
+            onClick={handleBooksDelete}
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
               <path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
@@ -48,7 +66,7 @@ const Settings = () => {
           </button>
         </div>
 
-        <hr className="my-8 h-0.5 bg-white border-0 dark:bg-gray-600"></hr>
+        <hr className="my-8 h-0.5 bg-white border-0 dark:bg-gray-600" />
         <div className="mt-3">
           <h2 className="text-gray-700 dark:text-gray-200">Sign Out</h2>
           <h3 className="text-gray-500 mb-2 text-sm">Warning! This will sign you out</h3>
@@ -62,6 +80,9 @@ const Settings = () => {
           </Link>
         </div>
       </div>
+      <AnimatePresence initial={false} mode="wait">
+        {isPopupOpen && <SuccessPopup text={popupText} />}
+      </AnimatePresence>
     </main>
   );
 };

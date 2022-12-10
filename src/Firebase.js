@@ -91,7 +91,7 @@ export async function saveBook(id, book) {
   try {
     await setDoc(doc(booksRef, id), book);
   } catch (error) {
-    console.error('Error writing new message to Firebase Database', error); //todo
+    alert('Error writing new message to Firebase Database', error);
   }
 }
 

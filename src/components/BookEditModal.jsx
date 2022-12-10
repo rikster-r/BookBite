@@ -4,22 +4,7 @@ import { motion } from 'framer-motion';
 import { saveBook, getBookbyId, deleteBookById } from '../Firebase';
 import Backdrop from './Backdrop';
 
-const dropIn = {
-  hidden: {
-    scale: 0,
-    opacity: 0,
-  },
-  visible: {
-    scale: 1,
-    opacity: 1,
-  },
-  exit: {
-    scale: 0,
-    opacity: 0,
-  },
-};
-
-const BookEditModal = ({ book, closeModal }) => {
+const BookEditModal = ({ book, closeModal, showPopup }) => {
   const [status, setStatus] = useState('');
   const [rating, setRating] = useState('');
   const [notes, setNotes] = useState('');
@@ -48,7 +33,7 @@ const BookEditModal = ({ book, closeModal }) => {
 
     saveBook(book.id, bookObject);
     closeModal();
-    //todo - success message
+    showPopup();
   };
 
   const handleRemove = () => {
@@ -61,10 +46,9 @@ const BookEditModal = ({ book, closeModal }) => {
       <motion.div
         onClick={e => e.stopPropagation()}
         className="relative overflow-hidden rounded-lg sm:my-8 sm:w-full sm:max-w-lg"
-        variants={dropIn}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
       >
         <form
           onSubmit={handleSubmit}
@@ -156,6 +140,7 @@ const BookEditModal = ({ book, closeModal }) => {
 BookEditModal.propTypes = {
   book: PropTypes.object,
   closeModal: PropTypes.func,
+  showPopup: PropTypes.func,
 };
 
 export default BookEditModal;

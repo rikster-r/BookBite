@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { updateUserDoc, updateImageInFolder } from '../../Firebase';
 
-const ProfilePicture = ({ profilePic }) => {
+const ProfilePicture = ({ profilePic, showPopup }) => {
   const handleNewProfilePic = async e => {
     const url = await updateImageInFolder(e.target.files[0], 'profilePicture');
     if (url) updateUserDoc('image', url);
+
+    showPopup('Profile picture changed successfully');
   };
 
   return (
@@ -41,6 +43,7 @@ const ProfilePicture = ({ profilePic }) => {
 
 ProfilePicture.propTypes = {
   profilePic: PropTypes.string,
+  showPopup: PropTypes.func,
 };
 
 export default ProfilePicture;

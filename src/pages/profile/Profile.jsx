@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { onSnapshot, collection } from 'firebase/firestore';
 import { getUserDoc, isUserSignedIn, usersRef } from '../../Firebase';
+import { AnimatePresence } from 'framer-motion';
 
 import Loading from '../../components/Loading';
 import Sidebar from './Sidebar';
@@ -9,6 +10,7 @@ import BookList from './BookList';
 import BookEditModal from '../../components/BookEditModal';
 import ProfileHeader from '../../components/ProfileHeader';
 import Info from '../../components/Info';
+import SuccessPopup from '../../components/popups/SuccessPopup';
 
 const Profile = () => {
   const username = useParams().username;
@@ -18,7 +20,8 @@ const Profile = () => {
   const [filter, setFilter] = useState('All');
   const [sort, setSort] = useState('Rating');
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState(null);
   const navigate = useNavigate();
 
@@ -57,12 +60,18 @@ const Profile = () => {
   // unused if profile doesn't belong to current user
   const openModal = item => {
     setCurrentBook(item);
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setCurrentBook(null);
-    setIsOpen(false);
+    setIsModalOpen(false);
+  };
+
+  const showPopup = () => {
+    setIsPopupOpen(true);
+
+    setTimeout(() => setIsPopupOpen(false), 2000);
   };
 
   if (books === undefined) {
@@ -144,7 +153,12 @@ const Profile = () => {
             />
           )}
         </main>
-        {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
+        <AnimatePresence initial={false} mode="wait">
+          {isModalOpen && (
+            <BookEditModal book={currentBook} showPopup={showPopup} closeModal={closeModal} />
+          )}
+          {isPopupOpen && <SuccessPopup text="Book edited succesfully" />}
+        </AnimatePresence>
       </div>
     </section>
   );

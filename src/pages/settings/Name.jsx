@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { updateUserDoc } from '../../Firebase';
 
-const Name = ({ name }) => {
+const Name = ({ name, showPopup }) => {
   const [inputName, setInputName] = useState(name);
 
   const changeName = e => {
     if (!e.target.value) return;
 
     setInputName(e.target.value);
+  };
+
+  const handleNewName = () => {
+    updateUserDoc('name', inputName);
+    showPopup('Name changed succesfully');
   };
 
   return (
@@ -29,9 +34,7 @@ const Name = ({ name }) => {
         className={`${
           inputName === name ? 'hidden' : ''
         } flex-none w-max px-6 py-2 mb-3 font-medium tracking-wide text-white capitalize transition-all duration-200 ease-in transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80`}
-        onClick={() => {
-          updateUserDoc('name', inputName);
-        }}
+        onClick={() => handleNewName()}
       >
         Save
       </button>
@@ -41,6 +44,7 @@ const Name = ({ name }) => {
 
 Name.propTypes = {
   name: PropTypes.string,
+  showPopup: PropTypes.string,
 };
 
 export default Name;

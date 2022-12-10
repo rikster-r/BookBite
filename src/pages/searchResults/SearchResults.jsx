@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import useQueryResults from '../../hooks/useQueryResults';
+
 import Loading from '../../components/Loading';
 import Book from './Book';
 import BookEditModal from '../../components/BookEditModal';
-import useQueryResults from '../../hooks/useQueryResults';
-import { AnimatePresence } from 'framer-motion';
+import SuccessPopup from '../../components/popups/SuccessPopup';
 
 const SearchResults = () => {
   const query = useParams().query;
   const results = useQueryResults(query);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState(null);
 
   const openModal = book => {
@@ -18,12 +21,18 @@ const SearchResults = () => {
       title: book.volumeInfo.title,
       imageUrl: book.volumeInfo.imageLinks.thumbnail.replace(/^http:\/\//i, 'https://'),
     });
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setCurrentBook(null);
-    setIsOpen(false);
+    setIsModalOpen(false);
+  };
+
+  const showPopup = () => {
+    setIsPopupOpen(true);
+
+    setTimeout(() => setIsPopupOpen(false), 2000);
   };
 
   if (results === undefined) {
@@ -52,8 +61,16 @@ const SearchResults = () => {
           <Book item={item} openModal={openModal} key={item.id} />
         ))}
       </ul>
-      <AnimatePresence initial={false} exitBeforeEnter={true}>
-        {isOpen && <BookEditModal book={currentBook} closeModal={closeModal} key="modal" />}
+      <AnimatePresence initial={false} mode="wait">
+        {isModalOpen && (
+          <BookEditModal
+            book={currentBook}
+            closeModal={closeModal}
+            showPopup={showPopup}
+            key="modal"
+          />
+        )}
+        {isPopupOpen && <SuccessPopup text="Book edited succesfully" />}
       </AnimatePresence>
     </main>
   );
