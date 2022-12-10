@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Dropdown = ({ name }) => {
   return (
-    <div
-      className={`hidden xl:group-hover:block absolute origin-top-right top-9 right-0 py-2 z-10 min-w-full rounded-md bg-white dark:bg-gray-800 shadow-lg ring-3 ring-white focus:outline-none`}
+    <motion.div
+      className={`hidden xl:block absolute origin-top-right top-9 right-0 py-2 z-10 min-w-full rounded-md bg-white dark:bg-gray-800 shadow-lg ring-3 ring-white focus:outline-none`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
     >
       <div className="py-1">
         <Link
@@ -39,7 +42,7 @@ const Dropdown = ({ name }) => {
           <span>Settings</span>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

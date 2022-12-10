@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchType from './SearchType';
 
@@ -17,8 +17,6 @@ const SearchBar = () => {
       navigate(`/profile/${query}`);
     }
   };
-
-  useEffect(() => handleQuery(), [searchType]);
 
   return (
     <div className="flex order-last sm:order-none mr-auto w-full sm:w-auto">

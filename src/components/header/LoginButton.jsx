@@ -1,16 +1,21 @@
 import Dropdown from './Dropdown';
-import React from 'react';
+import React, { useState } from 'react';
 import { signIn } from '../../Firebase';
 import useUserData from '../../hooks/useUserData.js';
 
 const LoginButton = () => {
   const [name, profilePic] = useUserData();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       {name ? (
-        <div className="relative group">
-          <button className="flex items-center gap-1">
+        <div
+          className="relative group"
+          onMouseEnter={() => setIsOpen(true)}
+          onMouseLeave={() => setIsOpen(false)}
+        >
+          <div className="flex items-center gap-1 hover:cursor-pointer">
             <img
               className="w-9 h-9"
               src={profilePic}
@@ -24,8 +29,8 @@ const LoginButton = () => {
             >
               <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>
-          </button>
-          <Dropdown name={name} />
+          </div>
+          {isOpen && <Dropdown name={name} />}
         </div>
       ) : (
         <button

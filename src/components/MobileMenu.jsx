@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUserData from '../hooks/useUserData';
+import { motion } from 'framer-motion';
 
 const MobileMenu = () => {
   const [name] = useUserData();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed xl:hidden bottom-5 right-5 dark:bg-gray-800 shadow-md rounded-md">
+    <motion.div
+      layout
+      className="fixed xl:hidden bottom-5 right-5 dark:bg-gray-800 shadow-md rounded-md"
+    >
       {isOpen ? (
         <div className="p-2 aspect-square grid grid-cols-2 place-content-center place-items-center">
           <Link
@@ -53,7 +57,7 @@ const MobileMenu = () => {
           </svg>
         </button>
       )}
-    </div>
+    </motion.div>
   );
 };
 
