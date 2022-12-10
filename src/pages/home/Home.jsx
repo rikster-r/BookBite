@@ -3,7 +3,7 @@ import Feature from './Feature';
 
 const Home = () => {
   return (
-    <main className="flex-1 dark:bg-gray-700 grid place-items-center sm:bg-wave dark:sm:bg-wave-dark bg-no-repeat bg-scroll bg-cover bg-center">
+    <main className="flex-1 dark:bg-gray-700 grid place-items-center bg-wave dark:bg-wave-dark bg-no-repeat bg-scroll bg-cover bg-center">
       <div className="mx-auto max-w-max px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Library</h2>
