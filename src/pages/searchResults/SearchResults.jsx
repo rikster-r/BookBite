@@ -4,6 +4,7 @@ import Loading from '../../components/Loading';
 import Book from './Book';
 import BookEditModal from '../../components/BookEditModal';
 import useQueryResults from '../../hooks/useQueryResults';
+import { AnimatePresence } from 'framer-motion';
 
 const SearchResults = () => {
   const query = useParams().query;
@@ -51,7 +52,9 @@ const SearchResults = () => {
           <Book item={item} openModal={openModal} key={item.id} />
         ))}
       </ul>
-      {isOpen ? <BookEditModal book={currentBook} closeModal={closeModal} /> : ''}
+      <AnimatePresence initial={false} exitBeforeEnter={true}>
+        {isOpen && <BookEditModal book={currentBook} closeModal={closeModal} key="modal" />}
+      </AnimatePresence>
     </main>
   );
 };
