@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isUserSignedIn } from '../../Firebase';
 
 const Book = ({ item, openModal }) => {
   if (!item.volumeInfo.imageLinks) {
@@ -22,17 +23,21 @@ const Book = ({ item, openModal }) => {
             <h1 className="line-clamp-1 text-base sm:text-2xl title-font font-bold">
               {item.volumeInfo.title}
             </h1>
-            <button
-              className="transition-colors duration-300 transform rounded-full hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:cursor-pointer"
-              onClick={() => openModal(item)}
-            >
-              <svg className="w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                />
-              </svg>
-            </button>
+            {isUserSignedIn() ? (
+              <button
+                className="transition-colors duration-300 transform rounded-full hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:cursor-pointer"
+                onClick={() => openModal(item)}
+              >
+                <svg className="w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                  />
+                </svg>
+              </button>
+            ) : (
+              ''
+            )}
           </div>
           <p className="leading-relaxed line-clamp-2 sm:line-clamp-5">
             {item.volumeInfo.description}

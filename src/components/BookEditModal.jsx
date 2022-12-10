@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { isUserSignedIn, saveBook, getBookbyId, deleteBookById } from '../Firebase';
+import { saveBook, getBookbyId, deleteBookById } from '../Firebase';
 
 const BookEditModal = ({ book, closeModal }) => {
   /*TO USE
@@ -49,13 +49,9 @@ const BookEditModal = ({ book, closeModal }) => {
       imageUrl: book.imageUrl,
     };
 
-    if (isUserSignedIn()) {
-      saveBook(book.id, bookObject);
-      closeModal();
-      //todo - success message
-    } else {
-      alert('You must login first');
-    }
+    saveBook(book.id, bookObject);
+    closeModal();
+    //todo - success message
   };
 
   const handleRemove = () => {
