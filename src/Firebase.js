@@ -57,8 +57,8 @@ onAuthStateChanged(auth, async user => {
     return;
   }
 
-  //create userDoc if it doesn't exist
-  if (!doc(usersRef, user.uid)) {
+  const userDoc = await getDoc(doc(usersRef, user.uid));
+  if (!userDoc.exists()) {
     await setDoc(doc(usersRef, user.uid), {
       name: user.displayName,
       image: user.photoURL,

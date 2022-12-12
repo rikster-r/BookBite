@@ -17,7 +17,7 @@ const LoginButton = () => {
         >
           <div className="flex items-center gap-1 hover:cursor-pointer">
             <img
-              className="w-9 h-9"
+              className="w-9 h-9 rounded-sm"
               src={profilePic}
               alt="Profile Picture"
               referrerPolicy="no-referrer"
