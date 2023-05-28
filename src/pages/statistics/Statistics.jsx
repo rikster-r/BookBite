@@ -1,41 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getDocs, collection } from 'firebase/firestore';
-import { getUserDoc, usersRef, isUserSignedIn } from '../../Firebase';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getDocs, collection } from "firebase/firestore";
+import { getUserDoc, usersRef, isUserSignedIn } from "../../Firebase";
 
-import ProfileHeader from '../../components/ProfileHeader';
-import Loading from '../../components/Loading';
-import ChartsSection from './ChartsSection';
-import Info from '../../components/Info';
+import ProfileHeader from "../../components/ProfileHeader";
+import Loading from "../../components/Loading";
+import ChartsSection from "./ChartsSection";
+import Info from "../../components/Info";
 
 const Statistics = () => {
   const navigate = useNavigate();
   const username = useParams().username;
   const [userData, setUserData] = useState();
 
-  const [ratings, setRatings] = useState([]);
-  const [statuses, setStatuses] = useState([]);
+  const [ratings, setRatings] = useState();
+  const [statuses, setStatuses] = useState();
 
   useEffect(() => {
     (async () => {
       const userDoc = await getUserDoc(username);
 
       if (userDoc) {
-        setUserData(userDoc.data());
-
         const booksRef = collection(usersRef, `${userDoc.id}/books`);
         const querySnapshot = await getDocs(booksRef);
 
-        const documents = querySnapshot.docs.map(doc => {
+        const documents = querySnapshot.docs.map((doc) => {
           return {
             ...doc.data(),
           };
         });
 
-        setRatings(documents.map(book => Number(book.rating)).filter(rating => rating !== 0));
-        setStatuses(documents.map(book => book.status));
+        setUserData(userDoc.data());
+        setRatings(
+          documents
+            .map((book) => Number(book.rating))
+            .filter((rating) => rating !== 0)
+        );
+        setStatuses(documents.map((book) => book.status));
       } else {
-        navigate('/404');
+        navigate("/404");
       }
     })();
   }, [username]);
@@ -49,22 +52,27 @@ const Statistics = () => {
   const getStandardDeviation = () => {
     const mean = getMeanRating();
     return Math.sqrt(
-      ratings.map(rating => (rating - mean) ** 2).reduce((a, b) => a + b, 0) / ratings.length
+      ratings.map((rating) => (rating - mean) ** 2).reduce((a, b) => a + b, 0) /
+        ratings.length
     ).toFixed(2);
   };
 
   const getPlanningLength = () => {
-    return statuses.filter(status => status === 'Planning').length;
+    return statuses.filter((status) => status === "Planning").length;
   };
 
-  if (ratings === undefined || statuses === undefined || userData === undefined) {
+  if (
+    ratings === undefined ||
+    statuses === undefined ||
+    userData === undefined
+  ) {
     return (
       <main className="flex-1 flex items-center justify-center dark:bg-gray-700">
         <Loading />
       </main>
     );
   }
-  
+
   if (userData.private && !isUserSignedIn()) {
     return <Info text="This user has set their profile to private" />;
   }
@@ -91,7 +99,9 @@ const Statistics = () => {
               </svg>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-3xl font-semibold leading-none">{statuses.length}</p>
+              <p className="text-3xl font-semibold leading-none">
+                {statuses.length}
+              </p>
               <p className="capitalize">Total Books</p>
             </div>
           </div>
@@ -105,7 +115,9 @@ const Statistics = () => {
               </svg>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-3xl font-semibold leading-none">{getMeanRating()}</p>
+              <p className="text-3xl font-semibold leading-none">
+                {getMeanRating()}
+              </p>
               <p className="capitalize">Mean Rating</p>
             </div>
           </div>
@@ -119,7 +131,9 @@ const Statistics = () => {
               </svg>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-3xl font-semibold leading-none">{getStandardDeviation()}</p>
+              <p className="text-3xl font-semibold leading-none">
+                {getStandardDeviation()}
+              </p>
               <p className="capitalize">Standard Deviation</p>
             </div>
           </div>
@@ -133,16 +147,22 @@ const Statistics = () => {
               </svg>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-3xl font-semibold leading-none">{getPlanningLength()}</p>
+              <p className="text-3xl font-semibold leading-none">
+                {getPlanningLength()}
+              </p>
               <p className="capitalize">Books Planned</p>
             </div>
           </div>
         </section>
-        <ChartsSection name="Ratings" data={ratings} categories={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} />
+        <ChartsSection
+          name="Ratings"
+          data={ratings}
+          categories={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        />
         <ChartsSection
           name="Statuses"
           data={statuses}
-          categories={['Reading', 'Completed', 'Paused', 'Dropped', 'Planning']}
+          categories={["Reading", "Completed", "Paused", "Dropped", "Planning"]}
         />
       </main>
     </section>
