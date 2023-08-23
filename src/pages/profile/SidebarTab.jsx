@@ -5,8 +5,10 @@ const SidebarTab = ({ text, selected, changeTab }) => {
   return (
     <button
       className={`${
-        selected === text ? 'bg-gray-800 text-white' : ''
-      } rounded-lg py-1 pl-5 text-left`}
+        selected === text
+          ? 'bg-gray-800 text-white font-semibold'
+          : 'font-medium'
+      } rounded-lg py-1.5 pl-5 text-left text-sm select-auto mt-0.5`}
       onClick={() => changeTab(text)}
     >
       {text}

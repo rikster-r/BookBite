@@ -14,8 +14,8 @@ const ProfileHeader = ({ user }) => {
     <>
       <div className="bg-gray-200 dark:bg-gray-900 flex items-end pt-28 dark:text-white sm:mb-4">
         <div className="flex items-end gap-6 px-6 pt-4 lg:px-32 2xl:px-72 mr-auto">
-          <img className="font-bold w-32 rounded-t" src={user.image}></img>
-          <h2 className="text-2xl mb-6 font-bold">{user.name}</h2>
+          <img className="font-bold w-24 sm:w-32 rounded-t" src={user.image}></img>
+          <h2 className="text-xl sm:text-2xl mb-6 font-bold">{user.name}</h2>
         </div>
         {/* bookmark style for usual */}
         <div className="hidden sm:inline-block">

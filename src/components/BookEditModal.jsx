@@ -20,7 +20,7 @@ const BookEditModal = ({ book, closeModal, showPopup }) => {
     })();
   }, []);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const bookObject = {
@@ -44,11 +44,12 @@ const BookEditModal = ({ book, closeModal, showPopup }) => {
   return (
     <Backdrop onClick={closeModal}>
       <motion.div
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         className="relative overflow-hidden rounded-lg sm:my-8 sm:w-full sm:max-w-lg"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0 }}
+        transition={{ type: 'spring', duration: 0.3}}
       >
         <form
           onSubmit={handleSubmit}
@@ -65,7 +66,7 @@ const BookEditModal = ({ book, closeModal, showPopup }) => {
                 autoComplete="Status"
                 className="block w-full rounded-md border border-gray-300 px-4 py-2 bg-white focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300 sm:text-sm shadow-sm text-gray-800"
                 value={status}
-                onChange={e => setStatus(e.target.value)}
+                onChange={(e) => setStatus(e.target.value)}
                 required
               >
                 <option value="">-- Select status -- </option>
@@ -89,7 +90,7 @@ const BookEditModal = ({ book, closeModal, showPopup }) => {
                 min="1"
                 max="10"
                 value={rating}
-                onChange={e => setRating(e.target.value)}
+                onChange={(e) => setRating(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -101,21 +102,21 @@ const BookEditModal = ({ book, closeModal, showPopup }) => {
                 id="notes"
                 className="min-h-[80px] w-full rounded-md border border-gray-300 px-4 py-4 focus:border-blue-400 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300 sm:text-sm shadow-sm text-gray-800 resize-y"
                 value={notes}
-                onChange={e => setNotes(e.target.value)}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </div>
           </div>
           <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 text-gray-800 dark:text-white dark:bg-gray-700 ">
             <button
               type="submit"
-              className="mb-3 inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mb-3 inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Confirm
             </button>
             {status ? (
               <button
                 type="button"
-                className="mb-3 inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                className="mb-3 inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-semibold text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm "
                 onClick={handleRemove}
               >
                 Delete
@@ -125,7 +126,7 @@ const BookEditModal = ({ book, closeModal, showPopup }) => {
             )}
             <button
               type="button"
-              className="mb-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-800 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mb-3 inline-flex w-full justify-center px-4 py-2 text-base text-white font-semibold shadow-sm hover:text-gray-200 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={closeModal}
             >
               Cancel
